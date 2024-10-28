@@ -7,6 +7,7 @@ enum class SyntaxKind {
 	CLOSE_TAG,
 	SLASH,
 	ALNUM,
+	ALNUM_VALUE,
 	WHITE_SPACE,
 	EOF_TOKEN, 
 	UNKNOWN_TYPE,

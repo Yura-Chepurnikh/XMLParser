@@ -6,6 +6,9 @@ std::ostream& operator<<(std::ostream& stream, SyntaxKind& kind) {
     case SyntaxKind::ALNUM:
         stream << "ALNUM";
         break;
+    case SyntaxKind::ALNUM_VALUE:
+        stream << "ALNUM_VALUE";
+        break;
     case SyntaxKind::OPEN_TAG:
         stream << "OPEN_TAG";
         break;

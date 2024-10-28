@@ -3,6 +3,7 @@
 
 #include "XMLParser.h"
 #include "./include/lexer.hpp"
+#include "./include/parser.hpp"
 
 using namespace std;
 
@@ -13,7 +14,9 @@ int main()
 		cout << ">> ";
 		getline(cin, input);
 
-		Lexer lexer(input);
+		Parser parser(input);
+		parser.Parse();
+		/*Lexer lexer(input);
 
 		while (true) {
 			SyntaxToken token = lexer.NextToken();
@@ -22,6 +25,6 @@ int main()
 				break;
 
 			cout << token.position << " " << token.kind << " " << token.text << endl;
-		}
+		}*/
 	}
 }
