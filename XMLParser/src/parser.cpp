@@ -18,7 +18,9 @@ Parser::Parser(const std::string& text) : text(text), position(0)
         //cout << token.kind << " " << token.position << " " << token.text << endl;
 
         if (token.kind != SyntaxKind::UNKNOWN_TYPE &&
-            token.kind != SyntaxKind::EOF_TOKEN)
+            token.kind != SyntaxKind::EOF_TOKEN && 
+            token.kind != SyntaxKind::WHITE_SPACE &&
+            token.kind != SyntaxKind::MARKS_TYPE)
             tokensasdasdasdas.push_back(token);
     }
 
@@ -31,13 +33,22 @@ Parser::Parser(const std::string& text) : text(text), position(0)
             tokensasdasdasdas[i].kind = SyntaxKind::ALNUM_VALUE;
         }
 
+        else if (tokensasdasdasdas[i - 1].kind == SyntaxKind::ALNUM &&
+            tokensasdasdasdas[i].kind == SyntaxKind::EQUAL_TOKEN &&
+            tokensasdasdasdas[i+1].kind == SyntaxKind::ALNUM) {
+
+            tokensasdasdasdas[i-1].kind = SyntaxKind::JSON_KEY;
+            tokensasdasdasdas[i+1].kind = SyntaxKind::JSON_VALUE;
+        }
     }
 
 
     for (size_t i = 0; i < tokensasdasdasdas.size(); i++)
     {
         if (tokensasdasdasdas[i].kind == SyntaxKind::ALNUM_VALUE ||
-            tokensasdasdasdas[i].kind == SyntaxKind::ALNUM)
+            tokensasdasdasdas[i].kind == SyntaxKind::ALNUM ||
+            tokensasdasdasdas[i].kind == SyntaxKind::JSON_KEY ||
+            tokensasdasdasdas[i].kind == SyntaxKind::JSON_VALUE)
             tokens.push_back(tokensasdasdasdas[i]);
     }
 
@@ -71,10 +82,15 @@ void Parser::Parse() {
     while (i > 0) {
         if (tokens[i].text != tokens[i - 1].text) {
             if (tokens[i].kind == SyntaxKind::ALNUM_VALUE) {
-                std::cout << "surprise motherfucker!!! ";
-
                 current_root->value = tokens[i].text; 
                 tokens.erase(tokens.begin() + i);
+            }
+            else if (tokens[i].kind == SyntaxKind::JSON_KEY) {
+                current_root->json_kv.json_key = tokens[i].text;
+                current_root->json_kv.json_value = tokens[i+1].text;
+                tokens.erase(tokens.begin() + i);
+                if (i > 0)
+                    tokens.erase(tokens.begin() + i);
             }
             else {
                 std::cout << "yes ";
@@ -116,7 +132,7 @@ void Parser::Display(Node* node, const std::string& prefix = "", bool isLast = t
         std::cout << "|--";
     }
 
-    std::cout << node->key  << node->value << std::endl;
+    std::cout << node->key << " (" << node->value << ") " << "(" << node->json_kv.json_key << " : " << node->json_kv.json_value << ")" << std::endl;
 
     std::string newPrefix = prefix + (isLast ? "    " : "|   ");
 
@@ -126,7 +142,7 @@ void Parser::Display(Node* node, const std::string& prefix = "", bool isLast = t
     }
 
 }
-// <roots><root1><child1><child2><child3></child3><child4></child4><child5></child5></child2></child1></root1><root1><child1><child2><child3></child3><child4></child4><child5></child5></child2></child1></root1></roots>
 
-// <roots><root><child1><child2><child3></child3><child4></child4><child5></child5></child2></child1></root><A><B><C></C></B></A></roots>
-// <roots><root><child1></child1></root><A><B><C></C></B></A></roots>
+//<cinema><movie1 hole1="Red"><name>some_name1</name><price>10$</price><date>some_date1</date></movie1><movie2 hole2="Blue"><name>some_name2</name><price>20$</price><date>some_date2</date></movie2><movie3 hole3="Blue"><name>some_name3</name><price>30$</price><date>some_date3</date></movie3></cinema>
+
+//<cinema><movie1 hole="Red"><name>name1</name><price>10$</price><date>August</date></movie1><movie2 hole="Blue"><name>name2</name><price>15$</price><date>August</date></movie2><movie3 hole="Blue"><name>name3</name><price>20$</price><date>August</date></movie3></cinema>

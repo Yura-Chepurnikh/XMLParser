@@ -41,6 +41,10 @@ SyntaxToken Lexer::NextToken() {
         return SyntaxToken(position++, ">", SyntaxKind::CLOSE_TAG);
     case '/':
         return SyntaxToken(position++, "/", SyntaxKind::SLASH);
+    case '=':
+        return SyntaxToken(position++, "=", SyntaxKind::EQUAL_TOKEN);
+    case '"':
+        return SyntaxToken(position++, "\"", SyntaxKind::MARKS_TYPE);
     default:
         return SyntaxToken(position++, content, SyntaxKind::SLASH);;
     }
