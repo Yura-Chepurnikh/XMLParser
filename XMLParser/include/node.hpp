@@ -3,24 +3,22 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <string>
-#include <vector>
 
-struct JSONKeyValue {
-    std::string json_value;
-    std::string json_key;
+struct KeyValue {
+    std::string m_value;
+    std::string m_key;
 
-    JSONKeyValue(const std::string& json_value = "", const std::string& json_key = "") :
-        json_value(json_value), json_key(json_key) { }
+    KeyValue(const std::string& value = "", const std::string& key = "") :
+        m_value(value), m_key(key) { }
 };
 
 struct Node {
-    std::string value;
-    std::string key;
+    std::string m_value;
+    std::string m_key;
 
-    JSONKeyValue json_kv;
+    KeyValue m_key_value;
 
-    Node* parent;
-    std::vector<Node*> children;
-    Node(const std::string& str) : key(str), value(value), parent(nullptr) { }
+    Node* m_parent;
+    std::vector<Node*> m_children;
+    Node(const std::string& str) : m_key(str), m_value(m_value), m_parent(nullptr) { }
 };

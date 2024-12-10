@@ -11,8 +11,8 @@ enum class SyntaxKind {
 	WHITE_SPACE,
 	EOF_TOKEN,
 	EQUAL_TOKEN,
-	JSON_KEY,
-	JSON_VALUE,
+	KEY,
+	VALUE,
 	MARKS_TYPE,
 	UNKNOWN_TYPE,
 };

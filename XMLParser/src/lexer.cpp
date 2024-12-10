@@ -4,30 +4,30 @@
 
 using namespace std;
 
-Lexer::Lexer(const std::string& text) : text(text), position(0) { }
+Lexer::Lexer(const std::string& text) : m_text(text), m_position(0) { }
 
 SyntaxToken Lexer::NextToken() {
-    if (position >= text.size())
-        return SyntaxToken(position, "\0", SyntaxKind::EOF_TOKEN);
+    if (m_position >= m_text.size())
+        return SyntaxToken(m_position, "\0", SyntaxKind::EOF_TOKEN);
 
     if (isalnum(GetCurrentChar())) {
-        int start = position;
+        int start = m_position;
 
         while (isalnum(GetCurrentChar()))
             Next();
 
-        int len = position - start;
-        std::string str = text.substr(start, len);
+        int len = m_position - start;
+        std::string str = m_text.substr(start, len);
         return SyntaxToken(start, str, SyntaxKind::ALNUM);
     }
     else if (isspace(GetCurrentChar())) {
-        int start = position;
+        int start = m_position;
 
         while (isspace(GetCurrentChar()))
             Next();
 
-        int len = position - start;
-        std::string str = text.substr(start, len);
+        int len = m_position - start;
+        std::string str = m_text.substr(start, len);
         return SyntaxToken(start, str, SyntaxKind::WHITE_SPACE);
     }
 
@@ -36,25 +36,25 @@ SyntaxToken Lexer::NextToken() {
 
     switch (currentChar) {
     case '<':
-        return SyntaxToken(position++, "<", SyntaxKind::OPEN_TAG);
+        return SyntaxToken(m_position++, "<", SyntaxKind::OPEN_TAG);
     case '>':
-        return SyntaxToken(position++, ">", SyntaxKind::CLOSE_TAG);
+        return SyntaxToken(m_position++, ">", SyntaxKind::CLOSE_TAG);
     case '/':
-        return SyntaxToken(position++, "/", SyntaxKind::SLASH);
+        return SyntaxToken(m_position++, "/", SyntaxKind::SLASH);
     case '=':
-        return SyntaxToken(position++, "=", SyntaxKind::EQUAL_TOKEN);
+        return SyntaxToken(m_position++, "=", SyntaxKind::EQUAL_TOKEN);
     case '"':
-        return SyntaxToken(position++, "\"", SyntaxKind::MARKS_TYPE);
+        return SyntaxToken(m_position++, "\"", SyntaxKind::MARKS_TYPE);
     default:
-        return SyntaxToken(position++, content, SyntaxKind::SLASH);;
+        return SyntaxToken(m_position++, content, SyntaxKind::SLASH);;
     }
 }
 
 char Lexer::GetCurrentChar() {
-    if (position >= text.size())
+    if (m_position >= m_text.size())
         return '\0';
-    return text[position];
+    return m_text[m_position];
 }
 
-void Lexer::Next() { ++position; }
+void Lexer::Next() { ++m_position; }
 

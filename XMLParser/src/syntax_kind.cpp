@@ -18,11 +18,11 @@ std::ostream& operator<<(std::ostream& stream, SyntaxKind& kind) {
     case SyntaxKind::EQUAL_TOKEN:
         stream << "EQUAL_TOKEN";
         break;
-    case SyntaxKind::JSON_KEY:
-        stream << "JSON_KEY";
+    case SyntaxKind::KEY:
+        stream << "KEY";
         break;
-    case SyntaxKind::JSON_VALUE:
-        stream << "JSON_VALUE";
+    case SyntaxKind::VALUE:
+        stream << "VALUE";
         break;
     default:
         stream << "UNKNOWN_TYPE";

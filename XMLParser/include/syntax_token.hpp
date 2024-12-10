@@ -4,9 +4,9 @@
 #include <string>
 
 struct SyntaxToken {
-    int position;
-    std::string text;
-    SyntaxKind kind;
+    int m_position;
+    std::string m_text;
+    SyntaxKind m_kind;
 
     SyntaxToken(int position = 0,
         std::string text = nullptr,

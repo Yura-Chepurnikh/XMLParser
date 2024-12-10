@@ -20,7 +20,7 @@ add_executable (XMLParser
 	"src/syntax_token.cpp"
 
 	"include/node.hpp"
-	"src/node.cpp"
+	
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
