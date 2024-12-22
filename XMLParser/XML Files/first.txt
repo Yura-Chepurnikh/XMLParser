@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application>
+        <name>MyApp</name>
+        <version>2</version>
+        <description>ToDoList</description>
+    </application>
+    <settings>
+        <theme>dark</theme>
+        <language>en</language>
+        <autoupdate>true</autoupdate>
+    </settings>
+    <users>
+        <user>
+            <id>1</id>
+            <name>John</name>
+            <role>admin</role>
+        </user>
+        <user>
+            <id>2</id>
+            <name>Jane</name>
+            <role>user</role>
+        </user>
+    </users>
+</config>

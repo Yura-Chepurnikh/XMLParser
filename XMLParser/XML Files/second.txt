@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+    <product>
+        <id>1001</id>
+        <name>Smartphone</name>
+        <category>Electronics</category>
+        <price>699</price>
+    </product>
+    <product>
+        <id>1002</id>
+        <name>Laptop</name>
+        <category>Electronics</category>
+        <price>1299</price>
+    </product>
+    <product>
+        <id>1003</id>
+        <name>Headphones</name>
+        <category>Accessories</category>
+        <price>199</price>
+    </product>
+</products>

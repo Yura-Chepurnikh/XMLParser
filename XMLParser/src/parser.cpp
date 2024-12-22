@@ -41,8 +41,8 @@ Parser::Parser(const std::string& text) : m_text(text), m_position(0)
 
     for (size_t i = 1; i < raw_tokens.size(); i++)
     {
-        if (raw_tokens[i-1].m_kind == SyntaxKind::OPEN_TAG && raw_tokens[i].m_kind == SyntaxKind::EXCLAMATION_POINT || raw_tokens[i].m_kind == SyntaxKind::QUESTION_MARK) {
-            while (raw_tokens[i].m_kind != SyntaxKind::CLOSE_TAG) 
+        if (raw_tokens[i - 1].m_kind == SyntaxKind::OPEN_TAG && raw_tokens[i].m_kind == SyntaxKind::EXCLAMATION_POINT || raw_tokens[i].m_kind == SyntaxKind::QUESTION_MARK) {
+            while (raw_tokens[i].m_kind != SyntaxKind::CLOSE_TAG)
                 ++i;
         }
         if (raw_tokens[i].m_kind == SyntaxKind::ALNUM_VALUE ||
@@ -51,9 +51,6 @@ Parser::Parser(const std::string& text) : m_text(text), m_position(0)
             raw_tokens[i].m_kind == SyntaxKind::VALUE)
             tokens.push_back(raw_tokens[i]);
     }
-
-    for (size_t i = 0; i < tokens.size(); i++)
-        cout << tokens[i].m_kind << " " << tokens[i].m_position << " " << tokens[i].m_text << endl;
 
     delete lexer;
 }
@@ -77,22 +74,20 @@ void Parser::Parse() try {
 
     int i = 1;
     while (i > 0) {
-        if ((i < 0 || i > 0) && tokens.size() != 0)
-            throw std::out_of_range("\033[31m Invalid XML file !!!\033[0m");
-        if (tokens[i].m_text != tokens[i - 1].m_text) {
-            if (tokens[i].m_kind == SyntaxKind::ALNUM_VALUE) {
-                current_root->m_json_like_value = tokens[i].m_text; 
+        if (tokens.at(i).m_text != tokens.at(i - 1).m_text) {
+            if (tokens.at(i).m_kind == SyntaxKind::ALNUM_VALUE) {
+                current_root->m_json_like_value = tokens.at(i).m_text; 
                 tokens.erase(tokens.begin() + i);
             }
-            else if (tokens[i].m_kind == SyntaxKind::KEY) {
-                JSONLikeKeyValue kv { tokens[i].m_text, tokens[i + 1].m_text };
+            else if (tokens.at(i).m_kind == SyntaxKind::KEY) {
+                JSONLikeKeyValue kv { tokens.at(i).m_text, tokens.at(i + 1).m_text};
                 current_root->m_key_values.push_back(kv);
                 tokens.erase(tokens.begin() + i);
                 if (i > 0)
                     tokens.erase(tokens.begin() + i);
             }
             else {
-                Node* newNode = new Node(tokens[i].m_text);
+                Node* newNode = new Node(tokens.at(i).m_text);
                 current_root->m_children.push_back(newNode);
                 Node* prev_node = current_root;
                 current_root = current_root->m_children.back();
@@ -101,9 +96,8 @@ void Parser::Parse() try {
             }
         }
         else {
-            std::cout << "\n";
             tokens.erase(tokens.begin() + i);
-            if (i > 0)
+            if (i >= 0)
                 tokens.erase(tokens.begin() + i - 1);
             i--;
             current_root = current_root->m_parent;
@@ -111,8 +105,8 @@ void Parser::Parse() try {
     }
     Display(global_root, "", true);
 }
-catch (const std::exception& e) {
-    clog << e.what() << endl;
+catch (const std::out_of_range& e) {
+    cerr << "\033[31m Invalid XML file \033[0m" << endl;
     std::exit(EXIT_FAILURE);
 }
 

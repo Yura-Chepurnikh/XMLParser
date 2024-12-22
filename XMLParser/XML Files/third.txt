@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library
+    <book>
+        <title>The Great Gatsby</title>
+        <author>F. Scott Fitzgerald</author>
+        <published>1925</published>
+        <isbn>9780743273565</isbn>
+    </book>
+    <book>
+        <title>1984</title>
+        <author>George Orwell</author>
+        <published>1949</published>
+        <isbn>9780451524935</isbn>
+    </book>
+    <book>
+        <title>Pride and Prejudice</title>
+        <author>Jane Austen</author>
+        <published>1813</published>
+        <isbn>9781503290563</isbn>
+    </book>
+</library>
