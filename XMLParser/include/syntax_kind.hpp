@@ -14,6 +14,9 @@ enum class SyntaxKind {
 	KEY,
 	VALUE,
 	MARKS_TYPE,
+	DASH,
+	EXCLAMATION_POINT,
+	QUESTION_MARK,
 	UNKNOWN_TYPE,
 };
 

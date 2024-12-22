@@ -1,6 +1,7 @@
 #include "../include/parser.hpp"
 #include <cstddef>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 using namespace std;
 
@@ -38,8 +39,12 @@ Parser::Parser(const std::string& text) : m_text(text), m_position(0)
         }
     }
 
-    for (size_t i = 0; i < raw_tokens.size(); i++)
+    for (size_t i = 1; i < raw_tokens.size(); i++)
     {
+        if (raw_tokens[i-1].m_kind == SyntaxKind::OPEN_TAG && raw_tokens[i].m_kind == SyntaxKind::EXCLAMATION_POINT || raw_tokens[i].m_kind == SyntaxKind::QUESTION_MARK) {
+            while (raw_tokens[i].m_kind != SyntaxKind::CLOSE_TAG) 
+                ++i;
+        }
         if (raw_tokens[i].m_kind == SyntaxKind::ALNUM_VALUE ||
             raw_tokens[i].m_kind == SyntaxKind::ALNUM ||
             raw_tokens[i].m_kind == SyntaxKind::KEY ||
@@ -66,12 +71,14 @@ SyntaxToken Parser::GetCurrentToken() {
     return Peek(0);
 }
 
-void Parser::Parse() {
+void Parser::Parse() try {
     Node* global_root = new Node(tokens[0].m_text);
     Node* current_root = global_root;
 
     int i = 1;
     while (i > 0) {
+        if ((i < 0 || i > 0) && tokens.size() != 0)
+            throw std::out_of_range("\033[31m Invalid XML file !!!\033[0m");
         if (tokens[i].m_text != tokens[i - 1].m_text) {
             if (tokens[i].m_kind == SyntaxKind::ALNUM_VALUE) {
                 current_root->m_json_like_value = tokens[i].m_text; 
@@ -103,6 +110,10 @@ void Parser::Parse() {
         }
     }
     Display(global_root, "", true);
+}
+catch (const std::exception& e) {
+    clog << e.what() << endl;
+    std::exit(EXIT_FAILURE);
 }
 
 void Parser::Display(Node* node, const std::string& prefix = "", bool isLast = true) {

@@ -21,6 +21,15 @@ std::ostream& operator<<(std::ostream& stream, SyntaxKind& kind) {
     case SyntaxKind::KEY:
         stream << "KEY";
         break;
+    case SyntaxKind::EXCLAMATION_POINT:
+        stream << "EXCLAMATION_POINT";
+        break;
+    case SyntaxKind::DASH:
+        stream << "DASH";
+        break;
+    case SyntaxKind::QUESTION_MARK:
+        stream << "QUESTION_MARK";
+        break;
     case SyntaxKind::VALUE:
         stream << "VALUE";
         break;

@@ -45,6 +45,12 @@ SyntaxToken Lexer::NextToken() {
         return SyntaxToken(m_position++, "=", SyntaxKind::EQUAL_TOKEN);
     case '"':
         return SyntaxToken(m_position++, "\"", SyntaxKind::MARKS_TYPE);
+    case '-':
+        return SyntaxToken(m_position++, "-", SyntaxKind::DASH);
+    case '!':
+        return SyntaxToken(m_position++, "!", SyntaxKind::EXCLAMATION_POINT);
+    case '?':
+        return SyntaxToken(m_position++, "?", SyntaxKind::QUESTION_MARK);
     default:
         return SyntaxToken(m_position++, content, SyntaxKind::SLASH);;
     }
