@@ -74,12 +74,12 @@ void Parser::Parse() {
     while (i > 0) {
         if (tokens[i].m_text != tokens[i - 1].m_text) {
             if (tokens[i].m_kind == SyntaxKind::ALNUM_VALUE) {
-                current_root->m_value = tokens[i].m_text; 
+                current_root->m_json_like_value = tokens[i].m_text; 
                 tokens.erase(tokens.begin() + i);
             }
             else if (tokens[i].m_kind == SyntaxKind::KEY) {
-                current_root->m_key_value.m_key = tokens[i].m_text;
-                current_root->m_key_value.m_value = tokens[i+1].m_text;
+                JSONLikeKeyValue kv { tokens[i].m_text, tokens[i + 1].m_text };
+                current_root->m_key_values.push_back(kv);
                 tokens.erase(tokens.begin() + i);
                 if (i > 0)
                     tokens.erase(tokens.begin() + i);
@@ -116,7 +116,10 @@ void Parser::Display(Node* node, const std::string& prefix = "", bool isLast = t
     else {
         std::cout << "|--";
     }
-    std::cout << node->m_key << " <" << node->m_value << "> " << "<" << node->m_key_value.m_key << " : " << node->m_key_value.m_value << ">" << std::endl;
+    std::cout << node->m_json_like_key << " <" << node->m_json_like_value << "> ";
+    for (auto item : node->m_key_values)
+        cout << "<" << item.m_value << " : " << item.m_key << "> ";
+    cout << endl;
 
     std::string newPrefix = prefix + (isLast ? "    " : "|   ");
 

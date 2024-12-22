@@ -4,21 +4,21 @@
 #include <vector>
 #include <string>
 
-struct KeyValue {
+struct JSONLikeKeyValue {
     std::string m_value;
     std::string m_key;
 
-    KeyValue(const std::string& value = "", const std::string& key = "") :
+    JSONLikeKeyValue(const std::string& value = "", const std::string& key = "") :
         m_value(value), m_key(key) { }
 };
 
 struct Node {
-    std::string m_value;
-    std::string m_key;
+    std::string m_json_like_value;
+    std::string m_json_like_key;
 
-    KeyValue m_key_value;
+    std::vector<JSONLikeKeyValue> m_key_values;
 
     Node* m_parent;
     std::vector<Node*> m_children;
-    Node(const std::string& str) : m_key(str), m_value(m_value), m_parent(nullptr) { }
+    Node(const std::string& str) : m_json_like_key(str), m_json_like_value(""), m_key_values(), m_parent(nullptr) { }
 };
