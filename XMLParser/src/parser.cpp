@@ -72,11 +72,11 @@ void Parser::Parse() try {
     Node* global_root = new Node(tokens[0].m_text);
     Node* current_root = global_root;
 
-    int i = 1;
+    auto i = 1;
     while (i > 0) {
         if (tokens.at(i).m_text != tokens.at(i - 1).m_text) {
             if (tokens.at(i).m_kind == SyntaxKind::ALNUM_VALUE) {
-                current_root->m_json_like_value = tokens.at(i).m_text; 
+                current_root->m_value = tokens.at(i).m_text; 
                 tokens.erase(tokens.begin() + i);
             }
             else if (tokens.at(i).m_kind == SyntaxKind::KEY) {
@@ -104,6 +104,7 @@ void Parser::Parse() try {
         }
     }
     Display(global_root, "", true);
+    DeleteTree(global_root);
 }
 catch (const std::out_of_range& e) {
     cerr << "\033[31m Invalid XML file \033[0m" << endl;
@@ -121,7 +122,7 @@ void Parser::Display(Node* node, const std::string& prefix = "", bool isLast = t
     else {
         std::cout << "|--";
     }
-    std::cout << node->m_json_like_key << " <" << node->m_json_like_value << "> ";
+    std::cout << node->m_key << " <" << node->m_value << "> ";
     for (auto item : node->m_key_values)
         cout << "<" << item.m_value << " : " << item.m_key << "> ";
     cout << endl;
@@ -132,6 +133,14 @@ void Parser::Display(Node* node, const std::string& prefix = "", bool isLast = t
         bool lastChild = (i == node->m_children.size() - 1);
         Display(node->m_children[i], newPrefix, lastChild);
     }
-
 }
+
+void Parser::DeleteTree(Node* node) {
+    if (!node)
+        return;
+    for (Node* child : node->m_children)
+        DeleteTree(child);
+    delete node;
+}
+
 

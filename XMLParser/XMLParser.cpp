@@ -32,8 +32,9 @@ int parse_file(const string& str) {
 
 int main()
 {
+	string current_path = filesystem::current_path().string();
+
 	parse_file(R"(D:\XMLParser\XMLParser\XML Files\first.txt)");
 	parse_file(R"(D:\XMLParser\XMLParser\XML Files\second.txt)");
-	parse_file(R"(D:\XMLParser\XMLParser\XML Files\third.txt)");
 	return 0;
 }

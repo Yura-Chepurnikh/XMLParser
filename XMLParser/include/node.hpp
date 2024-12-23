@@ -13,12 +13,12 @@ struct JSONLikeKeyValue {
 };
 
 struct Node {
-    std::string m_json_like_value;
-    std::string m_json_like_key;
+    std::string m_value;
+    std::string m_key;
 
     std::vector<JSONLikeKeyValue> m_key_values;
 
     Node* m_parent;
     std::vector<Node*> m_children;
-    Node(const std::string& str) : m_json_like_key(str), m_json_like_value(""), m_key_values(), m_parent(nullptr) { }
+    Node(const std::string& str) : m_key(str), m_value(""), m_key_values(), m_parent(nullptr) { }
 };

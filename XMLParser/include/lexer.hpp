@@ -8,7 +8,7 @@ class Lexer {
 public:
     Lexer(const std::string& text);
     char GetCurrentChar();
-    inline void Next();
+    void Next();
     SyntaxToken NextToken();
 private:
     int m_position;

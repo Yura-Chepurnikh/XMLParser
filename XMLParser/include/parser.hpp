@@ -9,15 +9,16 @@
 
 class Parser {
 public:
-    std::vector<SyntaxToken> tokens;
-    std::vector<SyntaxToken> preOrderTokens;
-    void Display(Node* node, const std::string& prefix, bool isLast);
     Parser(const std::string& text);
-    inline void Next();
+    void Display(Node* node, const std::string& prefix, bool isLast);
+    void Next();
     SyntaxToken GetCurrentToken();
     SyntaxToken Peek(int offset);
+    void DeleteTree(Node* node);
     void Parse();
 private:
+    std::vector<SyntaxToken> tokens;
+    std::vector<SyntaxToken> preOrderTokens;
     int m_position;
     std::string m_text;
 };
